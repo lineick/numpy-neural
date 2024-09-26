@@ -1,2 +1,2 @@
 # numpy-neural
-FNN from Scratch just using math
+Implemented Neural networks (e.g. FNN, CNN) from scratch.
