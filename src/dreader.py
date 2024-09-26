@@ -6,6 +6,7 @@ import struct
 from array import array
 from os.path import join
 import random
+import matplotlib
 import matplotlib.pyplot as plt
 
 
@@ -63,20 +64,6 @@ class MnistDataloader(object):
 
 
 #
-# Set file paths based on added MNIST Datasets
-#
-input_path = "./data/mnist"
-training_images_filepath = join(
-    input_path, "train-images-idx3-ubyte/train-images-idx3-ubyte"
-)
-training_labels_filepath = join(
-    input_path, "train-labels-idx1-ubyte/train-labels-idx1-ubyte"
-)
-test_images_filepath = join(input_path, "t10k-images-idx3-ubyte/t10k-images-idx3-ubyte")
-test_labels_filepath = join(input_path, "t10k-labels-idx1-ubyte/t10k-labels-idx1-ubyte")
-
-
-#
 # Helper function to show a list of images with their relating titles
 #
 def show_images(images, title_texts):
@@ -94,30 +81,49 @@ def show_images(images, title_texts):
         index += 1
 
 
-#
-# Load MINST dataset
-#
-mnist_dataloader = MnistDataloader(
-    training_images_filepath,
-    training_labels_filepath,
-    test_images_filepath,
-    test_labels_filepath,
-)
-(x_train, y_train), (x_test, y_test) = mnist_dataloader.load_data()
+if __name__ == "__main__":
+    matplotlib.use("TkAgg")  # Or 'Agg' if you're running in a headless environment
+    #
+    # Set file paths based on added MNIST Datasets
+    #
+    input_path = "./data/mnist"
+    training_images_filepath = join(
+        input_path, "train-images-idx3-ubyte/train-images-idx3-ubyte"
+    )
+    training_labels_filepath = join(
+        input_path, "train-labels-idx1-ubyte/train-labels-idx1-ubyte"
+    )
+    test_images_filepath = join(
+        input_path, "t10k-images-idx3-ubyte/t10k-images-idx3-ubyte"
+    )
+    test_labels_filepath = join(
+        input_path, "t10k-labels-idx1-ubyte/t10k-labels-idx1-ubyte"
+    )
 
-#
-# Show some random training and test images
-#
-images_2_show = []
-titles_2_show = []
-for i in range(0, 10):
-    r = random.randint(1, 60000)
-    images_2_show.append(x_train[r])
-    titles_2_show.append("training image [" + str(r) + "] = " + str(y_train[r]))
+    #
+    # Load MINST dataset
+    #
+    mnist_dataloader = MnistDataloader(
+        training_images_filepath,
+        training_labels_filepath,
+        test_images_filepath,
+        test_labels_filepath,
+    )
+    (x_train, y_train), (x_test, y_test) = mnist_dataloader.load_data()
 
-for i in range(0, 5):
-    r = random.randint(1, 10000)
-    images_2_show.append(x_test[r])
-    titles_2_show.append("test image [" + str(r) + "] = " + str(y_test[r]))
+    #
+    # Show some random training and test images
+    #
+    images_2_show = []
+    titles_2_show = []
+    for i in range(0, 10):
+        r = random.randint(1, 60000)
+        images_2_show.append(x_train[r])
+        titles_2_show.append("training image [" + str(r) + "] = " + str(y_train[r]))
 
-show_images(images_2_show, titles_2_show)
+    for i in range(0, 5):
+        r = random.randint(1, 10000)
+        images_2_show.append(x_test[r])
+        titles_2_show.append("test image [" + str(r) + "] = " + str(y_test[r]))
+
+    show_images(images_2_show, titles_2_show)
