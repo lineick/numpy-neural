@@ -286,13 +286,11 @@ def gradient_descent(
     return W1, b1, W2, b2
 
 
-# Function to save the model parameters to a file
 def save_model(W1, b1, W2, b2, path):
     np.savez(path, W1=W1, b1=b1, W2=W2, b2=b2)
     print(f"Model saved to {path}")
 
 
-# Function to load the model parameters from a file
 def load_model(path):
     data = np.load(path)
     W1 = data["W1"]
